@@ -5,7 +5,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
+
+import static com.senla.finance.project.utils.Constants.GET_ALL_COMPANIES_SYMBOLS_QUERY;
 
 @Component
 @Transactional
@@ -21,6 +24,6 @@ public class CompaniesDaoImpl implements CompaniesDao {
 
     @Override
     public List<String> getAllCompaniesSymbols() {
-        return entityManager.createQuery("SELECT c.symbol FROM Company c").getResultList();
+        return entityManager.createQuery(GET_ALL_COMPANIES_SYMBOLS_QUERY).getResultList();
     }
 }

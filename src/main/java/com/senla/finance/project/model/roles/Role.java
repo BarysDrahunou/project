@@ -1,5 +1,5 @@
 package com.senla.finance.project.model.roles;
 
-public enum Roles {
+public enum Role {
     ADMIN, USER
 }

@@ -12,6 +12,7 @@ import java.util.Map;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class YearlyReport {
+
     private String cik;
     private int year;
     private int quarter;

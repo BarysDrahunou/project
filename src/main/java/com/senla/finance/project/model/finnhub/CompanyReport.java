@@ -12,6 +12,7 @@ import java.util.List;
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CompanyReport {
+
     private String symbol;
     private List<YearlyReport> data;
 }

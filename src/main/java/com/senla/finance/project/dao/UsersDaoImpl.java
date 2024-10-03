@@ -1,6 +1,5 @@
 package com.senla.finance.project.dao;
 
-import com.senla.finance.project.model.roles.Roles;
 import com.senla.finance.project.model.users.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -8,6 +7,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static com.senla.finance.project.utils.Constants.CHECK_IF_USER_EXISTS_QUERY;
+import static com.senla.finance.project.utils.Constants.FIND_ALL_USERS_QUERY;
 
 @Component
 @Transactional
@@ -21,18 +23,14 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     public List<User> findAll() {
-        return entityManager.createQuery("SELECT u FROM User u").getResultList();
+        return entityManager.createQuery(FIND_ALL_USERS_QUERY).getResultList();
     }
 
     @Override
-    public Roles getUserRole(String login) {
-        List roles =  entityManager.createQuery("SELECT u.role FROM User u WHERE u.login LIKE ?1")
-                .setParameter(1, login).getResultList();
-               if (roles.isEmpty()) throw new RuntimeException("Your user doesn't exist");
-        return (Roles) roles.getFirst();
+    public boolean checkIfUserExists(String email) {
+        List users = entityManager.createQuery(CHECK_IF_USER_EXISTS_QUERY)
+                .setParameter(1, email).getResultList();
+        return !users.isEmpty();
     }
 
-    public List<User> findAllWithExpiringSubscription() {
-        return entityManager.createQuery("SELECT u FROM User u").getResultList();
-    }
 }

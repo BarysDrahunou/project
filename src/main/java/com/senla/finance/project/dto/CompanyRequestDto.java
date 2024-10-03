@@ -4,5 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class CompanyRequestDto {
+
     private String symbol;
 }

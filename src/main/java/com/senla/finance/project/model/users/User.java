@@ -1,44 +1,36 @@
 package com.senla.finance.project.model.users;
 
 import com.senla.finance.project.model.currency.Balance;
-import com.senla.finance.project.model.roles.Roles;
+import com.senla.finance.project.model.roles.Role;
 import com.senla.finance.project.model.subscriptions.SubscriptionKind;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
-@ToString
+import static com.senla.finance.project.utils.Constants.USERS_TABLE_NAME;
+
+
 @Entity
-@Table(name = "Users")
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = USERS_TABLE_NAME)
 public class User {
 
-    private String name;
-    private String surname;
     @Id
-    private String login;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     @Enumerated(EnumType.STRING)
     @Setter
     private SubscriptionKind subscriptionKind;
-    @Enumerated(EnumType.STRING)
-    @Setter
-    private Roles role;
     private LocalDateTime expirationDate;
     private Balance balance;
-
-
-    public User(String name, String surname, String login, Roles role) {
-        this.name = name;
-        this.surname = surname;
-        this.login = login;
-        this.subscriptionKind = SubscriptionKind.DISABLED;
-        this.role = role;
-        this.expirationDate = LocalDateTime.of(3000,1,1,0,0);
-        this.balance = new Balance();
-    }
 }

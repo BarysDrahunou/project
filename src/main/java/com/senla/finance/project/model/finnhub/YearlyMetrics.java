@@ -7,21 +7,24 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import static com.senla.finance.project.utils.Constants.*;
+
 @Setter
 @Getter
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class YearlyMetrics {
+
     @Id
     private String symbol;
-    @JsonProperty(value = "52WeekHigh")
+    @JsonProperty(value = YEARLY_WEEK_HIGH)
     private Double high;
-    @JsonProperty(value = "52WeekHighDate")
+    @JsonProperty(value = YEARLY_WEEK_HIGH_DATE)
     private String highDate;
-    @JsonProperty(value = "52WeekLow")
+    @JsonProperty(value = YEARLY_WEEK_LOW)
     private Double low;
-    @JsonProperty(value = "52WeekLowDate")
+    @JsonProperty(value = YEARLY_WEEK_LOW_DATE)
     private String lowDate;
-    @JsonProperty(value = "52WeekPriceReturnDaily")
+    @JsonProperty(value = YEARLY_WEEK_PRICE_RETURN_DAILY)
     private Double priceReturnDaily;
 }
