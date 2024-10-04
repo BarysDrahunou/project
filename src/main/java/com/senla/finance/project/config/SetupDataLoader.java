@@ -12,8 +12,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-
 import static com.senla.finance.project.utils.Constants.*;
 
 @Component
@@ -44,8 +42,7 @@ public class SetupDataLoader {
                     .password(passwordEncoder.encode(defaultAdminUserPassword))
                     .role(Role.ADMIN)
                     .subscriptionKind(SubscriptionKind.DISABLED)
-                    .expirationDate(LocalDateTime.of(DEFAULT_EXPIRATION_DATE_YEAR, DEFAULT_EXPIRATION_DATE_MONTH,
-                            DEFAULT_EXPIRATION_DATE_DAY, DEFAULT_EXPIRATION_DATE_HOUR, DEFAULT_EXPIRATION_DATE_MINUTE))
+                    .expirationDate(DISABLED_SUBSCRIPTION_EXPIRATION_DATE)
                     .balance(new Balance())
                     .build();
 

@@ -8,6 +8,8 @@ import java.util.List;
 @Component
 public interface UsersDao {
 
+    void persist(User user);
+
     void merge(User user);
 
     User findUserByEmail(String email);
@@ -15,4 +17,6 @@ public interface UsersDao {
     List<User> findAll();
 
     boolean checkIfUserExists(String email);
+
+    void deleteUser(String email);
 }

@@ -8,9 +8,13 @@ public interface UserService {
 
     void addUser(User user);
 
+    void updateUser(User user);
+
     User findUserByEmail(String email);
 
     List<User> getAllUsers();
 
     boolean checkIfUserExists(String email);
+
+    void deleteUser(String email);
 }
