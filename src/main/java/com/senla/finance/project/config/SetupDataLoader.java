@@ -6,6 +6,7 @@ import com.senla.finance.project.model.subscriptions.SubscriptionKind;
 import com.senla.finance.project.model.users.User;
 import com.senla.finance.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,8 +14,19 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+import static com.senla.finance.project.utils.Constants.*;
+
 @Component
 public class SetupDataLoader {
+
+    @Value("${admin.user.firstname}")
+    private String defaultAdminUserFirstName;
+    @Value("${admin.user.lastname}")
+    private String defaultAdminUserLastName;
+    @Value("${admin.user.email}")
+    private String defaultAdminUserEmail;
+    @Value("${admin.user.password}")
+    private String defaultAdminUserPassword;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -24,15 +36,16 @@ public class SetupDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void addAdminIfNotExists() {
-        if (!userService.checkIfUserExists("admin@senla.eu")) {
+        if (!userService.checkIfUserExists(defaultAdminUserEmail)) {
             User user = User.builder()
-                    .firstName("Aleh")
-                    .lastName("Lapin")
-                    .email("admin@senla.eu")
-                    .password(passwordEncoder.encode("admin"))
+                    .firstName(defaultAdminUserFirstName)
+                    .lastName(defaultAdminUserLastName)
+                    .email(defaultAdminUserEmail)
+                    .password(passwordEncoder.encode(defaultAdminUserPassword))
                     .role(Role.ADMIN)
                     .subscriptionKind(SubscriptionKind.DISABLED)
-                    .expirationDate(LocalDateTime.of(3000, 1, 1, 0, 0))
+                    .expirationDate(LocalDateTime.of(DEFAULT_EXPIRATION_DATE_YEAR, DEFAULT_EXPIRATION_DATE_MONTH,
+                            DEFAULT_EXPIRATION_DATE_DAY, DEFAULT_EXPIRATION_DATE_HOUR, DEFAULT_EXPIRATION_DATE_MINUTE))
                     .balance(new Balance())
                     .build();
 

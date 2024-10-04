@@ -1,4 +1,4 @@
-package com.senla.finance.project.config;
+package com.senla.finance.project.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

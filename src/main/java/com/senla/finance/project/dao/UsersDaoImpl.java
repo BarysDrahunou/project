@@ -8,8 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.senla.finance.project.utils.Constants.CHECK_IF_USER_EXISTS_QUERY;
-import static com.senla.finance.project.utils.Constants.FIND_ALL_USERS_QUERY;
+import static com.senla.finance.project.utils.Constants.*;
 
 @Component
 @Transactional
@@ -22,15 +21,22 @@ public class UsersDaoImpl implements UsersDao {
         entityManager.merge(user);
     }
 
+    @Override
+    public User findUserByEmail(String email) {
+        return (User) getUserByEmail(email).getFirst();
+    }
+
     public List<User> findAll() {
         return entityManager.createQuery(FIND_ALL_USERS_QUERY).getResultList();
     }
 
     @Override
     public boolean checkIfUserExists(String email) {
-        List users = entityManager.createQuery(CHECK_IF_USER_EXISTS_QUERY)
-                .setParameter(1, email).getResultList();
-        return !users.isEmpty();
+        return !getUserByEmail(email).isEmpty();
     }
 
+    private List getUserByEmail(String email) {
+        return entityManager.createQuery(FIND_USER_BY_EMAIL_QUERY)
+                .setParameter(PARAMETER_NUMBER, email).getResultList();
+    }
 }

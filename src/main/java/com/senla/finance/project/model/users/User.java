@@ -15,6 +15,7 @@ import static com.senla.finance.project.utils.Constants.USERS_TABLE_NAME;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Table(name = USERS_TABLE_NAME)
 public class User {
 

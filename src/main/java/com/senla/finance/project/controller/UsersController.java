@@ -3,6 +3,7 @@ package com.senla.finance.project.controller;
 import com.senla.finance.project.model.users.User;
 import com.senla.finance.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class UsersController {
     private UserService userService;
 
     @GetMapping
+    //@PreAuthorize("hasRole('ADMIN')")
     public List<User> getUsers() {
         return userService.getAllUsers();
     }

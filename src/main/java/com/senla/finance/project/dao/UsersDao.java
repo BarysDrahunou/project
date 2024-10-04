@@ -10,6 +10,8 @@ public interface UsersDao {
 
     void merge(User user);
 
+    User findUserByEmail(String email);
+
     List<User> findAll();
 
     boolean checkIfUserExists(String email);
