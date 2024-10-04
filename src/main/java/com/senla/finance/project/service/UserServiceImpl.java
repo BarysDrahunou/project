@@ -15,6 +15,11 @@ public class UserServiceImpl implements UserService {
     UsersDao usersDao;
 
     public void addUser(User user) {
+        usersDao.persist(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
         usersDao.merge(user);
     }
 
@@ -30,5 +35,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkIfUserExists(String email) {
         return usersDao.checkIfUserExists(email);
+    }
+
+    @Override
+    public void deleteUser(String email) {
+        usersDao.deleteUser(email);
     }
 }

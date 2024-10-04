@@ -2,6 +2,8 @@ package com.senla.finance.project.utils;
 
 import lombok.experimental.UtilityClass;
 
+import java.time.LocalDateTime;
+
 import static java.lang.String.format;
 
 @UtilityClass
@@ -43,5 +45,23 @@ public class Constants {
     public static final int DEFAULT_EXPIRATION_DATE_DAY = 1;
     public static final int DEFAULT_EXPIRATION_DATE_HOUR = 0;
     public static final int DEFAULT_EXPIRATION_DATE_MINUTE = 0;
+    public static final LocalDateTime DISABLED_SUBSCRIPTION_EXPIRATION_DATE = LocalDateTime
+            .of(DEFAULT_EXPIRATION_DATE_YEAR, DEFAULT_EXPIRATION_DATE_MONTH,
+            DEFAULT_EXPIRATION_DATE_DAY, DEFAULT_EXPIRATION_DATE_HOUR, DEFAULT_EXPIRATION_DATE_MINUTE);
 
+    public static final String FIRST_NAME_PROPERTY = "firstName";
+    public static final String LAST_NAME_PROPERTY = "lastName";
+    public static final String EMAIL_PROPERTY = "email";
+    public static final String PASSWORD_PROPERTY = "password";
+    public static final String VALID_EMAIL_MESSAGE = "Email should be valid";
+
+    public static final String ADMIN_ROLE= "ADMIN";
+    public static final String ROLE= "role";
+
+    public static final String USERS_PATTERN= "/users/**";
+
+    public static final String USER_ALREADY_EXISTS_EXCEPTION = "User with an email %s already exists";
+    public static final String USER_NOT_FOUND_EXCEPTION = "User with an email %s does not exist";
+    public static final String PROPERTY_NOT_VALID_EXCEPTION = "Given property '%s' is absent or empty, but required.";
+    public static final String ROLE_NOT_VALID_EXCEPTION = "Given role '%s' is incorrect, only 'ADMIN' and 'USER' roles are allowed.";
 }

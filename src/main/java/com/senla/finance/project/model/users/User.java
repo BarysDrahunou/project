@@ -16,13 +16,13 @@ import static com.senla.finance.project.utils.Constants.USERS_TABLE_NAME;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Table(name = USERS_TABLE_NAME)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String firstName;
     private String lastName;
     private String email;
@@ -30,7 +30,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @Enumerated(EnumType.STRING)
-    @Setter
     private SubscriptionKind subscriptionKind;
     private LocalDateTime expirationDate;
     private Balance balance;
