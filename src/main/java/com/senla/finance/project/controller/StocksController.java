@@ -3,19 +3,22 @@ package com.senla.finance.project.controller;
 import com.senla.finance.project.dto.CompanyRequestDto;
 import com.senla.finance.project.model.finnhub.CompanyReport;
 import com.senla.finance.project.model.finnhub.YearlyMetrics;
-import com.senla.finance.project.service.FinnhubServiceImpl;
+import com.senla.finance.project.service.CompanyService;
+import com.senla.finance.project.service.FinnhubService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/stocks")
 public class StocksController {
 
     @Autowired
-    private FinnhubServiceImpl finnhubService;
+    private FinnhubService finnhubService;
+
+    @Autowired
+    private CompanyService companyService;
 
     @GetMapping(value = "/yearly")
     public YearlyMetrics getYearlyMetrics(@RequestBody CompanyRequestDto companyRequestDto) {
@@ -25,6 +28,12 @@ public class StocksController {
     @GetMapping(value = "/report")
     public CompanyReport getCompanyFullReport(@RequestBody CompanyRequestDto companyRequestDto) {
         return finnhubService.getCompanyFullReport(companyRequestDto.getSymbol());
+    }
+
+    @PostMapping(value = "add")
+    public void addCompany(@RequestBody CompanyRequestDto companyRequestDto) {
+        String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        companyService.addCompany(username, companyRequestDto.getSymbol());
     }
 
 }

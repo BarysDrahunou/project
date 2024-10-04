@@ -7,9 +7,11 @@ import java.util.List;
 
 @Component
 public interface CompaniesDao {
-
+    void persist(String userEmail, String symbol);
 
     void mergeAll(List<Company> entities);
+
+    Company findCompanyBySymbol(String symbol);
 
     List<String> getAllCompaniesSymbols();
 }

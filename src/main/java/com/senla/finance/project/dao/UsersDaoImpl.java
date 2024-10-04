@@ -37,8 +37,9 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public User findUserByEmail(String email) {
-        if (!getUserByEmail(email).isEmpty()) {
-            return (User) getUserByEmail(email).getFirst();
+        List users = getUserByEmail(email);
+        if (!users.isEmpty()) {
+            return (User) users.getFirst();
         }
 
         throw new UserNotFoundException(format(USER_NOT_FOUND_EXCEPTION, email));

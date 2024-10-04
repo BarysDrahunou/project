@@ -39,6 +39,7 @@ public class Constants {
     public static final String FIND_ALL_USERS_QUERY = "SELECT u FROM User u";
     public static final String FIND_USER_BY_EMAIL_QUERY = format("SELECT u FROM User u WHERE u.email LIKE ?%s", PARAMETER_NUMBER);
     public static final String GET_ALL_COMPANIES_SYMBOLS_QUERY = "SELECT c.symbol FROM Company c";
+    public static final String FIND_COMPANY_BY_SYMBOL_QUERY = format("SELECT c FROM Company c WHERE c.symbol LIKE ?%s", PARAMETER_NUMBER);
 
     public static final int DEFAULT_EXPIRATION_DATE_YEAR = 3000;
     public static final int DEFAULT_EXPIRATION_DATE_MONTH = 1;
@@ -56,12 +57,14 @@ public class Constants {
     public static final String VALID_EMAIL_MESSAGE = "Email should be valid";
 
     public static final String ADMIN_ROLE= "ADMIN";
+    public static final String USER_ROLE= "USER";
     public static final String ROLE= "role";
 
     public static final String USERS_PATTERN= "/users/**";
 
-    public static final String USER_ALREADY_EXISTS_EXCEPTION = "User with an email %s already exists";
-    public static final String USER_NOT_FOUND_EXCEPTION = "User with an email %s does not exist";
+    public static final String USER_ALREADY_EXISTS_EXCEPTION = "User with an email '%s' already exists";
+    public static final String USER_NOT_FOUND_EXCEPTION = "User with an email '%s' does not exist";
+    public static final String COMPANY_NOT_FOUND_EXCEPTION = "Company with a symbol '%s' does not exist";
     public static final String PROPERTY_NOT_VALID_EXCEPTION = "Given property '%s' is absent or empty, but required.";
     public static final String ROLE_NOT_VALID_EXCEPTION = "Given role '%s' is incorrect, only 'ADMIN' and 'USER' roles are allowed.";
 }
