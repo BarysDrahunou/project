@@ -2,6 +2,8 @@ package com.senla.finance.project.utils;
 
 import lombok.experimental.UtilityClass;
 
+import static java.lang.String.format;
+
 @UtilityClass
 public class Constants {
 
@@ -30,8 +32,16 @@ public class Constants {
     public static final String YEARLY_WEEK_PRICE_RETURN_DAILY = "52WeekPriceReturnDaily";
 
     public static final long INITIAL_BALANCE = 0L;
+    public static final int PARAMETER_NUMBER = 1;
 
     public static final String FIND_ALL_USERS_QUERY = "SELECT u FROM User u";
-    public static final String CHECK_IF_USER_EXISTS_QUERY = "SELECT u FROM User u WHERE u.email LIKE ?1";
+    public static final String FIND_USER_BY_EMAIL_QUERY = format("SELECT u FROM User u WHERE u.email LIKE ?%s", PARAMETER_NUMBER);
     public static final String GET_ALL_COMPANIES_SYMBOLS_QUERY = "SELECT c.symbol FROM Company c";
+
+    public static final int DEFAULT_EXPIRATION_DATE_YEAR = 3000;
+    public static final int DEFAULT_EXPIRATION_DATE_MONTH = 1;
+    public static final int DEFAULT_EXPIRATION_DATE_DAY = 1;
+    public static final int DEFAULT_EXPIRATION_DATE_HOUR = 0;
+    public static final int DEFAULT_EXPIRATION_DATE_MINUTE = 0;
+
 }

@@ -3,11 +3,12 @@ package com.senla.finance.project.service;
 import com.senla.finance.project.dao.UsersDao;
 import com.senla.finance.project.model.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -15,6 +16,11 @@ public class UserServiceImpl implements UserService {
 
     public void addUser(User user) {
         usersDao.merge(user);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return usersDao.findUserByEmail(email);
     }
 
     public List<User> getAllUsers() {

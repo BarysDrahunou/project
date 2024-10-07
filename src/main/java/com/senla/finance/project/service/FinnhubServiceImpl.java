@@ -9,13 +9,13 @@ import feign.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 import static com.senla.finance.project.utils.Constants.*;
 
-@Component
+@Service
 public class FinnhubServiceImpl implements FinnhubService {
 
     @Value("${finnhub.api.token}")
