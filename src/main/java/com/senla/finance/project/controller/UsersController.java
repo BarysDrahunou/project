@@ -36,7 +36,7 @@ public class UsersController {
 
     @DeleteMapping("/delete")
     public void deleteUser(@Valid @RequestBody UserRequestDto requestDto) {
-        userService.deleteUser(validated(EMAIL_PROPERTY, requestDto.getEmail()));
+        userService.deleteUser(requestDto);
     }
 
     @PutMapping("/update")

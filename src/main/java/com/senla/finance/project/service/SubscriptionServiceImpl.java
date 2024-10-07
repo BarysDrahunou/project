@@ -28,7 +28,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         SubscriptionKind subscriptionKind = subscriptionValidated(SUBSCRIPTION, subscriptionRequestDto.getSubscriptionKind());
         int days = numberValidated(DAYS, subscriptionRequestDto.getDays());
 
-        User user = usersDao.findUserByEmail(email);
+        User user = usersDao.findUserByEmail(email).get();
         String bankAccountId = validated(VALID_BANK_ACCOUNT_ID_PROPERTY, subscriptionRequestDto.getId());
         String bankAccountSecret = validated(VALID_BANK_ACCOUNT_SECRET_PROPERTY, subscriptionRequestDto.getSecret());
 

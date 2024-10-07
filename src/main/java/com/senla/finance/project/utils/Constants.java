@@ -82,6 +82,7 @@ public class Constants {
     public static final String SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION = "Given subscription kind '%s' is not allowed";
     public static final String BANK_ACCOUNT_ALREADY_EXISTS_EXCEPTION = "User with an id '%s' already exists";
     public static final String BANK_ACCOUNT_DOES_NOT_EXIST_EXCEPTION = "User with an id '%s' does not have any active bank accounts";
+    public static final String BANK_ACCOUNT_CREDENTIALS_INVALID_EXCEPTION = "Provided credentials are incorrect. Please try again.";
     public static final String NOT_ENOUGH_MONEY_EXCEPTION = "You don't have enough money to perform this operation. Please try again.";
 
     public static final String MAPPER_NAME_FORMAT = "%s %s";

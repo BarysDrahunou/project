@@ -3,6 +3,8 @@ package com.senla.finance.project.service;
 import com.senla.finance.project.dao.UsersDao;
 import com.senla.finance.project.dto.SubscriptionResponseDto;
 import com.senla.finance.project.dto.UserRequestDto;
+import com.senla.finance.project.exceptions.UserAlreadyExistsException;
+import com.senla.finance.project.exceptions.UserNotFoundException;
 import com.senla.finance.project.mapper.SubscriptionMapper;
 import com.senla.finance.project.model.currency.Balance;
 import com.senla.finance.project.model.roles.Role;
@@ -14,10 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.senla.finance.project.utils.Constants.*;
 import static com.senla.finance.project.utils.PropertiesValidator.*;
 import static com.senla.finance.project.utils.PropertiesValidator.updatePropertyIfNotBlank;
+import static java.lang.String.format;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,10 +33,18 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     public void addUser(UserRequestDto requestDto) {
+        String email = validated(EMAIL_PROPERTY, requestDto.getEmail());
+
+        Optional<User> existingUser = usersDao.findUserByEmail(email);
+
+        existingUser.ifPresent(s -> {
+            throw new UserAlreadyExistsException(format(USER_ALREADY_EXISTS_EXCEPTION, email));
+        });
+
         User user = User.builder()
                 .firstName(validated(FIRST_NAME_PROPERTY, requestDto.getFirstName()))
                 .lastName(validated(LAST_NAME_PROPERTY, requestDto.getLastName()))
-                .email(validated(EMAIL_PROPERTY, requestDto.getEmail()))
+                .email(email)
                 .password(passwordEncoder.encode(validated(PASSWORD_PROPERTY, requestDto.getPassword())))
                 .role(roleValidated(requestDto.getRole()))
                 .subscriptionKind(SubscriptionKind.DISABLED)
@@ -45,25 +57,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(UserRequestDto requestDto) {
-        User existingUser = usersDao.findUserByEmail(validated(EMAIL_PROPERTY, requestDto.getEmail()));
+        String email = validated(EMAIL_PROPERTY, requestDto.getEmail());
 
-        existingUser.setFirstName(updatePropertyIfNotBlank(existingUser.getFirstName(), requestDto.getFirstName()));
-        existingUser.setLastName(updatePropertyIfNotBlank(existingUser.getLastName(), requestDto.getLastName()));
-        existingUser.setEmail(updatePropertyIfNotBlank(existingUser.getEmail(), requestDto.getEmail()));
-        existingUser.setPassword(passwordEncoder.encode(updatePropertyIfNotBlank(existingUser.getPassword(), requestDto.getPassword())));
-        existingUser.setRole(Role.valueOf(updatePropertyIfNotBlank(existingUser.getRole().name(), requestDto.getRole())));
+        Optional<User> existingUser = usersDao.findUserByEmail(email);
 
-        usersDao.merge(existingUser);
+        User user = existingUser.orElseThrow(()-> new UserNotFoundException(format(USER_NOT_FOUND_EXCEPTION, email)));
+
+        user.setFirstName(updatePropertyIfNotBlank(user.getFirstName(), requestDto.getFirstName()));
+        user.setLastName(updatePropertyIfNotBlank(user.getLastName(), requestDto.getLastName()));
+        user.setPassword(passwordEncoder.encode(updatePropertyIfNotBlank(user.getPassword(), requestDto.getPassword())));
+        user.setRole(Role.valueOf(updatePropertyIfNotBlank(user.getRole().name(), requestDto.getRole())));
+
+        usersDao.merge(user);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return usersDao.findUserByEmail(email);
+        return usersDao.findUserByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException(format(USER_NOT_FOUND_EXCEPTION, email)));
     }
 
     @Override
     public SubscriptionResponseDto getSubscriptionResponse(String email) {
-        User user = usersDao.findUserByEmail(email);
+        User user = usersDao.findUserByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException(format(USER_NOT_FOUND_EXCEPTION, email)));
 
         return new SubscriptionMapper().mapFromUser(user);
     }
@@ -73,7 +90,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(String email) {
-        usersDao.deleteUser(email);
+    public void deleteUser(UserRequestDto requestDto) {
+        String email = validated(EMAIL_PROPERTY, requestDto.getEmail());
+
+        User user = usersDao.findUserByEmail(email)
+                .orElseThrow(()-> new UserNotFoundException(format(USER_NOT_FOUND_EXCEPTION, email)));
+
+        usersDao.deleteUser(user);
     }
 }

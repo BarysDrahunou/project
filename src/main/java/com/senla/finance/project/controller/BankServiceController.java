@@ -25,7 +25,6 @@ public class BankServiceController {
 
     @PostMapping(value = "/account/topup")
     public void topUp(@RequestBody AccountTopUpDto accountTopUpDto) {
-        bankService.topUpAccount(validated(VALID_BANK_ACCOUNT_ID_PROPERTY, accountTopUpDto.getId()),
-                numberValidated(VALID_BANK_ACCOUNT_BALANCE_PROPERTY, accountTopUpDto.getSum()));
+        bankService.topUpAccount(accountTopUpDto);
     }
 }
