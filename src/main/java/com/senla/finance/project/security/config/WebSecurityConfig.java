@@ -8,8 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static com.senla.finance.project.utils.Constants.ADMIN_ROLE;
-import static com.senla.finance.project.utils.Constants.USERS_PATTERN;
+import static com.senla.finance.project.utils.Constants.*;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
@@ -21,6 +20,8 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(USERS_PATTERN).hasRole(ADMIN_ROLE)
+                        .requestMatchers(STOCKS_PATTERN).hasRole(USER_ROLE)
+                        .requestMatchers(BANK_PATTERN).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());
