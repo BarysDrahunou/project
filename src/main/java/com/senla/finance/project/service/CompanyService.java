@@ -5,5 +5,5 @@ import org.springframework.stereotype.Component;
 @Component
 public interface CompanyService {
 
-    void addCompany(String userEmail, String symbol);
+    void addCompany(String symbol);
 }

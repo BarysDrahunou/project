@@ -1,20 +1,22 @@
 package com.senla.finance.project.service;
 
+import com.senla.finance.project.dto.SubscriptionResponseDto;
+import com.senla.finance.project.dto.UserRequestDto;
 import com.senla.finance.project.model.users.User;
 
 import java.util.List;
 
 public interface UserService {
 
-    void addUser(User user);
+    void addUser(UserRequestDto requestDto);
 
-    void updateUser(User user);
+    void updateUser(UserRequestDto requestDto);
 
     User findUserByEmail(String email);
 
-    List<User> getAllUsers();
+    SubscriptionResponseDto getSubscriptionResponse(String email);
 
-    boolean checkIfUserExists(String email);
+    List<User> getAllUsers();
 
     void deleteUser(String email);
 }

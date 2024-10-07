@@ -28,21 +28,14 @@ public class SubscriptionController {
     @GetMapping(value = "/current")
     public SubscriptionResponseDto getCurrentSubscription() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userService.findUserByEmail(email);
 
-        return new SubscriptionMapper().mapFromUser(user);
+        return userService.getSubscriptionResponse(email);
     }
 
     @PostMapping(value = "/update")
     public void updateSubscription(@RequestBody SubscriptionRequestDto subscriptionRequestDto) {
-        SubscriptionKind subscriptionKind = subscriptionValidated(SUBSCRIPTION, subscriptionRequestDto.getSubscriptionKind());
-        int days = numberValidated(DAYS, subscriptionRequestDto.getDays());
-
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userService.findUserByEmail(email);
-        String bankAccountId = validated(VALID_BANK_ACCOUNT_ID_PROPERTY, subscriptionRequestDto.getId());
-        String bankAccountSecret = validated(VALID_BANK_ACCOUNT_SECRET_PROPERTY, subscriptionRequestDto.getSecret());
 
-        subscriptionService.updateSubscription(user, subscriptionKind, days, bankAccountId, bankAccountSecret);
+        subscriptionService.updateSubscription(email, subscriptionRequestDto);
     }
 }

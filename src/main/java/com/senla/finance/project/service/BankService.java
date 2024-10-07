@@ -1,12 +1,12 @@
 package com.senla.finance.project.service;
 
-import com.senla.finance.project.model.bank.BankAccount;
+import com.senla.finance.project.dto.BankAccountDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public interface BankService {
 
-    void createAccount(BankAccount bankAccount);
+    void createAccount(BankAccountDto bankAccountDto);
 
     void topUpAccount(String id, int sum);
 

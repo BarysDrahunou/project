@@ -6,8 +6,6 @@ import com.senla.finance.project.model.finnhub.YearlyMetrics;
 import com.senla.finance.project.service.CompanyService;
 import com.senla.finance.project.service.FinnhubService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,8 +30,7 @@ public class StocksController {
 
     @PostMapping(value = "/add")
     public void addCompany(@RequestBody CompanyRequestDto companyRequestDto) {
-        String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        companyService.addCompany(username, companyRequestDto.getSymbol());
+        companyService.addCompany(companyRequestDto.getSymbol());
     }
 
 }

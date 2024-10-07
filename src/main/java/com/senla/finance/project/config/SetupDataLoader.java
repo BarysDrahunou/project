@@ -1,10 +1,10 @@
 package com.senla.finance.project.config;
 
+import com.senla.finance.project.dao.UsersDao;
 import com.senla.finance.project.model.currency.Balance;
 import com.senla.finance.project.model.roles.Role;
 import com.senla.finance.project.model.subscriptions.SubscriptionKind;
 import com.senla.finance.project.model.users.User;
-import com.senla.finance.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -30,11 +30,11 @@ public class SetupDataLoader {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private UserService userService;
+    private UsersDao usersDao;
 
     @EventListener(ApplicationReadyEvent.class)
     public void addAdminIfNotExists() {
-        if (!userService.checkIfUserExists(defaultAdminUserEmail)) {
+        if (!usersDao.checkIfUserExists(defaultAdminUserEmail)) {
             User user = User.builder()
                     .firstName(defaultAdminUserFirstName)
                     .lastName(defaultAdminUserLastName)
@@ -46,7 +46,7 @@ public class SetupDataLoader {
                     .balance(new Balance())
                     .build();
 
-            userService.addUser(user);
+            usersDao.persist(user);
         }
     }
 }
