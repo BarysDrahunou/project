@@ -27,7 +27,7 @@ public class CustomExceptionHandler {
     }
 
 
-    @ExceptionHandler({UserNotFoundException.class, CompanyNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, CompanyNotFoundException.class, BankAccountNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(RuntimeException e) {
         return responseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
     }
@@ -37,7 +37,7 @@ public class CustomExceptionHandler {
         return responseEntity(e.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, PropertyNotValidException.class})
+    @ExceptionHandler({IllegalArgumentException.class, PropertyNotValidException.class, NotEnoughMoneyException.class})
     public ResponseEntity<String> handleNotValidArgumentsException(RuntimeException e) {
         return responseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

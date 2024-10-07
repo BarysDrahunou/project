@@ -20,7 +20,8 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(USERS_PATTERN).hasRole(ADMIN_ROLE)
-                        .requestMatchers("stocks/**").hasRole(USER_ROLE)
+                        .requestMatchers(STOCKS_PATTERN).hasRole(USER_ROLE)
+                        .requestMatchers(BANK_PATTERN).permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());

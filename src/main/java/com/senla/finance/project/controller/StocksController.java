@@ -30,7 +30,7 @@ public class StocksController {
         return finnhubService.getCompanyFullReport(companyRequestDto.getSymbol());
     }
 
-    @PostMapping(value = "add")
+    @PostMapping(value = "/add")
     public void addCompany(@RequestBody CompanyRequestDto companyRequestDto) {
         String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         companyService.addCompany(username, companyRequestDto.getSymbol());

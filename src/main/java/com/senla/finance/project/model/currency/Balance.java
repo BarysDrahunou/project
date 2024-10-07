@@ -16,7 +16,11 @@ public class Balance {
         this.balance = INITIAL_BALANCE;
     }
 
-    public void topUp(long deposit) {
+    public void topUp(int deposit) {
         this.balance += deposit;
+    }
+
+    public void withdraw(int sum) {
+        this.balance -= sum;
     }
 }

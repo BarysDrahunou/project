@@ -2,6 +2,7 @@ package com.senla.finance.project.utils;
 
 import com.senla.finance.project.exceptions.PropertyNotValidException;
 import com.senla.finance.project.model.roles.Role;
+import com.senla.finance.project.model.subscriptions.SubscriptionKind;
 import lombok.experimental.UtilityClass;
 
 import static com.senla.finance.project.utils.Constants.*;
@@ -15,6 +16,36 @@ public class PropertiesValidator {
             return value;
         } else {
             throw new PropertyNotValidException(format(PROPERTY_NOT_VALID_EXCEPTION, name));
+        }
+    }
+
+    public static int numberValidated(String name, String value) {
+        validated(name, value);
+        int parsedValue;
+
+        try {
+            parsedValue = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new PropertyNotValidException(format(PROPERTY_SHOULD_BE_A_NUMBER_EXCEPTION, name));
+        }
+        if (parsedValue > 0) {
+            return parsedValue;
+        } else {
+            throw new PropertyNotValidException(format(NUMBER_NOT_VALID_EXCEPTION, name));
+        }
+    }
+
+    public static SubscriptionKind subscriptionValidated(String name, String value) {
+        validated(name, value);
+        SubscriptionKind subscriptionKind;
+        try {
+            subscriptionKind = SubscriptionKind.valueOf(value);
+            if (SubscriptionKind.valueOf(value).equals(SubscriptionKind.DISABLED)) {
+                throw new PropertyNotValidException(format(SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION, value));
+            }
+            return subscriptionKind;
+        } catch (IllegalArgumentException e) {
+            throw new PropertyNotValidException(format(SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION, value));
         }
     }
 
