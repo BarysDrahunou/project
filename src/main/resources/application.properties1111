@@ -18,3 +18,5 @@ admin.user.firstname=Aleh
 admin.user.lastname=Lapin
 admin.user.email=admin@senla.eu
 admin.user.password=admin
+
+subscriptions.update=true

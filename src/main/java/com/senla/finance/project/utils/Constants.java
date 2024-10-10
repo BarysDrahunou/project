@@ -2,7 +2,7 @@ package com.senla.finance.project.utils;
 
 import lombok.experimental.UtilityClass;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static java.lang.String.format;
 
@@ -26,6 +26,7 @@ public class Constants {
     public static final String ALL = "all";
 
     public static final String USERS_TABLE_NAME = "Users";
+    public static final String USERS_COMPANIES_TABLE_NAME = "user_company";
 
     public static final String YEARLY_WEEK_HIGH = "52WeekHigh";
     public static final String YEARLY_WEEK_HIGH_DATE = "52WeekHighDate";
@@ -34,6 +35,8 @@ public class Constants {
     public static final String YEARLY_WEEK_PRICE_RETURN_DAILY = "52WeekPriceReturnDaily";
 
     public static final long INITIAL_BALANCE = 0L;
+    public static final int DEFAULT_SUBSCRIPTION_PRICE = 0;
+    public static final String DEFAULT_SUBSCRIPTION_EXPIRATION = "never";
     public static final int PARAMETER_NUMBER = 1;
     public static final int PARAMETER_NUMBER_TWO = 2;
 
@@ -43,15 +46,18 @@ public class Constants {
     public static final String FIND_COMPANY_BY_SYMBOL_QUERY = format("SELECT c FROM Company c WHERE c.symbol LIKE ?%s", PARAMETER_NUMBER);
     public static final String FIND_USER_ACCOUNT_BY_ID_QUERY = format("SELECT a FROM BankAccount a WHERE a.id LIKE ?%s", PARAMETER_NUMBER);
     public static final String FIND_USER_ACCOUNT_BY_ID_AND_SECRET_QUERY = format("SELECT a FROM BankAccount a WHERE a.id LIKE ?%s AND a.secret LIKE ?%s", PARAMETER_NUMBER, PARAMETER_NUMBER_TWO);
+    public static final String FIND_USER_COMPANY_BY_SYMBOL = format("SELECT u FROM UserCompany u WHERE u.userEmail LIKE ?%s AND u.companySymbol LIKE ?%s", PARAMETER_NUMBER, PARAMETER_NUMBER_TWO);
+    public static final String DELETE_ALL_SUBSCRIPTIONS_QUERY = "DELETE FROM Subscription s";
+    public static final String FIND_DEFAULT_SUBSCRIPTION_QUERY = format("SELECT s FROM Subscription s WHERE s.subscriptionPrice = %s", DEFAULT_SUBSCRIPTION_PRICE);
+    public static final String DELETE_ALL_AUTHORITIES_QUERY = "DELETE FROM Authority a";
+    public static final String DELETE_ALL_SUBSCRIPTIONS_AUTHORITIES_QUERY = "DELETE FROM SubscriptionAuthorities s";
 
     public static final int DEFAULT_EXPIRATION_DATE_YEAR = 3000;
     public static final int DEFAULT_EXPIRATION_DATE_MONTH = 1;
     public static final int DEFAULT_EXPIRATION_DATE_DAY = 1;
-    public static final int DEFAULT_EXPIRATION_DATE_HOUR = 0;
-    public static final int DEFAULT_EXPIRATION_DATE_MINUTE = 0;
-    public static final LocalDateTime DISABLED_SUBSCRIPTION_EXPIRATION_DATE = LocalDateTime
+    public static final LocalDate DEFAULT_SUBSCRIPTION_EXPIRATION_DATE = LocalDate
             .of(DEFAULT_EXPIRATION_DATE_YEAR, DEFAULT_EXPIRATION_DATE_MONTH,
-                    DEFAULT_EXPIRATION_DATE_DAY, DEFAULT_EXPIRATION_DATE_HOUR, DEFAULT_EXPIRATION_DATE_MINUTE);
+                    DEFAULT_EXPIRATION_DATE_DAY);
 
     public static final String FIRST_NAME_PROPERTY = "firstName";
     public static final String LAST_NAME_PROPERTY = "lastName";
@@ -61,12 +67,17 @@ public class Constants {
     public static final String VALID_BANK_ACCOUNT_ID_PROPERTY = "id";
     public static final String VALID_BANK_ACCOUNT_BALANCE_PROPERTY = "sum";
     public static final String VALID_BANK_ACCOUNT_SECRET_PROPERTY = "secret";
+    public static final String SUBSCRIPTIONS_PROPERTY = "subscriptions.";
+    public static final String SUBSCRIPTIONS_UPDATE_PROPERTY = "subscriptions.update";
+
+    public static final String DEFAULT_SUBSCRIPTION_LOG = "User %s has just been registered and received default %s subscription with expiration date %s";
 
     public static final String ADMIN_ROLE = "ADMIN";
     public static final String USER_ROLE = "USER";
     public static final String ROLE = "role";
-    public static final String SUBSCRIPTION = "subscriptionKind";
-    public static final String DAYS = "days";
+    public static final String NAME = "name";
+    public static final String PRICE = "price";
+    public static final String AUTHORITIES = "authorities";
 
     public static final String USERS_PATTERN = "/users/**";
     public static final String STOCKS_PATTERN = "/stocks/**";
@@ -82,9 +93,11 @@ public class Constants {
     public static final String SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION = "Given subscription kind '%s' is not allowed";
     public static final String BANK_ACCOUNT_ALREADY_EXISTS_EXCEPTION = "User with an id '%s' already exists";
     public static final String BANK_ACCOUNT_DOES_NOT_EXIST_EXCEPTION = "User with an id '%s' does not have any active bank accounts";
+    public static final String BANK_ACCOUNT_CREDENTIALS_INVALID_EXCEPTION = "Provided credentials are incorrect. Please try again.";
     public static final String NOT_ENOUGH_MONEY_EXCEPTION = "You don't have enough money to perform this operation. Please try again.";
+    public static final String COMPANY_ALREADY_ADDED_EXCEPTION = "Company with chosen symbol '%s' is already selected. Please choose another one.";
+    public static final String DEFAULT_SUBSCRIPTION_NOT_FOUND_EXCEPTION = "Default subscription does not exist";
 
     public static final String MAPPER_NAME_FORMAT = "%s %s";
-    public static final String NEVER = "never";
     public static final String MAPPER_DATE_FORMAT = "yyyy-MM-dd";
 }

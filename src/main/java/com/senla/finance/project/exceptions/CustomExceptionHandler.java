@@ -27,13 +27,13 @@ public class CustomExceptionHandler {
     }
 
 
-    @ExceptionHandler({UserNotFoundException.class, CompanyNotFoundException.class, BankAccountNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, CompanyNotFoundException.class, BankAccountNotFoundException.class, SubscriptionNotFoundException.class})
     public ResponseEntity<String> handleNotFoundException(RuntimeException e) {
         return responseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<String> handleException(UserAlreadyExistsException e) {
+    @ExceptionHandler({UserAlreadyExistsException.class, CompanyAlreadyAddedException.class})
+    public ResponseEntity<String> handleException(RuntimeException e) {
         return responseEntity(e.getMessage(), HttpStatus.CONFLICT);
     }
 

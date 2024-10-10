@@ -1,6 +1,6 @@
 package com.senla.finance.project.dto;
 
-import com.senla.finance.project.model.subscriptions.SubscriptionKind;
+import com.senla.finance.project.model.subscriptions.Subscription;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,6 +9,6 @@ import lombok.Getter;
 public class SubscriptionResponseDto {
     private String userName;
     private String email;
-    private SubscriptionKind subscriptionKind;
+    private Subscription subscription;
     private String subscriptionExpiration;
 }

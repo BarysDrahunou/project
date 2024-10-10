@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class SubscriptionRequestDto {
-    private String subscriptionKind;
+    private String subscription;
     private String days;
     private String id;
     private String secret;

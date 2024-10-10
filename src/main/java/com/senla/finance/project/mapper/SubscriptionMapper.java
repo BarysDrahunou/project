@@ -1,7 +1,7 @@
 package com.senla.finance.project.mapper;
 
 import com.senla.finance.project.dto.SubscriptionResponseDto;
-import com.senla.finance.project.model.subscriptions.SubscriptionKind;
+import com.senla.finance.project.model.subscriptions.Subscription;
 import com.senla.finance.project.model.users.User;
 
 import java.time.LocalDateTime;
@@ -16,14 +16,12 @@ public class SubscriptionMapper {
         return SubscriptionResponseDto.builder()
                 .userName(format(MAPPER_NAME_FORMAT, user.getFirstName(), user.getLastName()))
                 .email(user.getEmail())
-                .subscriptionKind(user.getSubscriptionKind())
-                .subscriptionExpiration(formatExpirationDate(user.getSubscriptionKind(), user.getExpirationDate()))
                 .build();
     }
 
-    private String formatExpirationDate(SubscriptionKind subscriptionKind, LocalDateTime expirationDate) {
-        if (subscriptionKind.equals(SubscriptionKind.DISABLED)) {
-            return NEVER;
+    private String formatExpirationDate(Subscription subscription, LocalDateTime expirationDate) {
+        if (subscription.getSubscriptionPrice() == DEFAULT_SUBSCRIPTION_PRICE) {
+            return DEFAULT_SUBSCRIPTION_EXPIRATION;
         }
         return expirationDate.format(DateTimeFormatter.ofPattern(MAPPER_DATE_FORMAT));
     }

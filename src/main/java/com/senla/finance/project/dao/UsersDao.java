@@ -4,6 +4,7 @@ import com.senla.finance.project.model.users.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public interface UsersDao {
@@ -12,11 +13,11 @@ public interface UsersDao {
 
     void merge(User user);
 
-    User findUserByEmail(String email);
+    Optional<User> findUserByEmail(String email);
 
     List<User> findAll();
 
     boolean checkIfUserExists(String email);
 
-    void deleteUser(String email);
+    void deleteUser(User user);
 }

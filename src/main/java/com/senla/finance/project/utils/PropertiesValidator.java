@@ -2,7 +2,7 @@ package com.senla.finance.project.utils;
 
 import com.senla.finance.project.exceptions.PropertyNotValidException;
 import com.senla.finance.project.model.roles.Role;
-import com.senla.finance.project.model.subscriptions.SubscriptionKind;
+import com.senla.finance.project.model.subscriptions.Subscription;
 import lombok.experimental.UtilityClass;
 
 import static com.senla.finance.project.utils.Constants.*;
@@ -35,18 +35,19 @@ public class PropertiesValidator {
         }
     }
 
-    public static SubscriptionKind subscriptionValidated(String name, String value) {
-        validated(name, value);
-        SubscriptionKind subscriptionKind;
-        try {
-            subscriptionKind = SubscriptionKind.valueOf(value);
-            if (SubscriptionKind.valueOf(value).equals(SubscriptionKind.DISABLED)) {
-                throw new PropertyNotValidException(format(SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION, value));
-            }
-            return subscriptionKind;
-        } catch (IllegalArgumentException e) {
-            throw new PropertyNotValidException(format(SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION, value));
-        }
+    public static Subscription subscriptionValidated(String name, String value) {
+//        validated(name, value);
+//        SubscriptionKind subscriptionKind;
+//        try {
+//            subscriptionKind = SubscriptionKind.valueOf(value);
+//            if (SubscriptionKind.valueOf(value).equals(SubscriptionKind.DISABLED)) {
+//                throw new PropertyNotValidException(format(SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION, value));
+//            }
+//            return subscriptionKind;
+//        } catch (IllegalArgumentException e) {
+//            throw new PropertyNotValidException(format(SUBSCRIPTION_VALUE_NOT_VALID_EXCEPTION, value));
+//        }
+        return null;
     }
 
     public static Role roleValidated(String value) {
