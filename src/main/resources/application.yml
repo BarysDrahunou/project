@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: project
+  datasource:
+    driverClassName: org.postgresql.Driver
+    password: postgres
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  task:
+    scheduling:
+      pool:
+        size: 5
+
+finnhub:
+  api:
+    url: https://finnhub.io/api/v1
+    token: btqbebn48v6t9hdd6cog
+
+admin:
+  user:
+    firstname: Aleh
+    lastname: Lapin
+    password: admin
+    email: admin@senla.eu
+
+authorities:
+  update: true
+  values: NONE, MONITOR_TWO_COMPANIES, MONITOR_THREE_COMPANIES, YEARLY_REPORT, SPECIFIC_COMPANY_FINANCIAL_REPORT
+
+subscriptions:
+  update: true
+  subscription0:
+    name: DISABLED
+    price: 0
+    authorities: NONE
+  subscription1:
+    name: LITE
+    price: 1
+    authorities: MONITOR_TWO_COMPANIES
+  subscription2:
+    name: PRO
+    price: 10
+    authorities: MONITOR_THREE_COMPANIES, YEARLY_REPORT
+  subscription3:
+    name: PREMIUM
+    price: 30
+    authorities: MONITOR_THREE_COMPANIES, YEARLY_REPORT, SPECIFIC_COMPANY_FINANCIAL_REPORT

@@ -8,7 +8,6 @@ import com.senla.finance.project.exceptions.UserNotFoundException;
 import com.senla.finance.project.mapper.SubscriptionMapper;
 import com.senla.finance.project.model.currency.Balance;
 import com.senla.finance.project.model.roles.Role;
-import com.senla.finance.project.model.subscriptions.SubscriptionKind;
 import com.senla.finance.project.model.users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +29,9 @@ public class UserServiceImpl implements UserService {
     UsersDao usersDao;
 
     @Autowired
+    SubscriptionService subscriptionService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public void addUser(UserRequestDto requestDto) {
@@ -47,12 +49,25 @@ public class UserServiceImpl implements UserService {
                 .email(email)
                 .password(passwordEncoder.encode(validated(PASSWORD_PROPERTY, requestDto.getPassword())))
                 .role(roleValidated(requestDto.getRole()))
-                .subscriptionKind(SubscriptionKind.DISABLED)
-                .expirationDate(DISABLED_SUBSCRIPTION_EXPIRATION_DATE)
                 .balance(new Balance())
                 .build();
 
         usersDao.persist(user);
+        subscriptionService.logNewDefaultSubscription(email);
+    }
+
+    @Override
+    public void addUser(User user) {
+        String email = user.getEmail();
+
+        Optional<User> existingUser = usersDao.findUserByEmail(email);
+
+        existingUser.ifPresent(s -> {
+            throw new UserAlreadyExistsException(format(USER_ALREADY_EXISTS_EXCEPTION, email));
+        });
+
+        usersDao.persist(user);
+        subscriptionService.logNewDefaultSubscription(email);
     }
 
     @Override
@@ -75,6 +90,11 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         return usersDao.findUserByEmail(email)
                 .orElseThrow(()-> new UserNotFoundException(format(USER_NOT_FOUND_EXCEPTION, email)));
+    }
+
+    @Override
+    public boolean userExists(String email) {
+        return usersDao.findUserByEmail(email).isPresent();
     }
 
     @Override

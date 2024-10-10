@@ -10,9 +10,13 @@ public interface UserService {
 
     void addUser(UserRequestDto requestDto);
 
+    void addUser(User user);
+
     void updateUser(UserRequestDto requestDto);
 
     User findUserByEmail(String email);
+
+    boolean userExists(String email);
 
     SubscriptionResponseDto getSubscriptionResponse(String email);
 
